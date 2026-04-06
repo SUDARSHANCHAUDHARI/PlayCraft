@@ -67,15 +67,20 @@ Paste your git log or describe your changes. Get polished, user-friendly release
 ## How It Works
 
 ```
-User input ──► store-listing ──► listing-writer ──► title / short desc / full desc
-                                └──► policy-checker ──► policy review
+/playcraft:store-listing ──► listing-writer ──► title / short desc / full desc
+                          └──► policy-checker ──► compliance review
 
-User input ──► aso-audit ──► aso-agent ──► keyword report + scoring
+/playcraft:aso-audit ─────► aso-agent ────────► keyword report + scored listing
 
-User input ──► declarations ──► policy-checker ──► declarations checklist
+/playcraft:declarations ──► policy-checker ───► declarations checklist
 
-User input ──► release-notes ──► locale-agent ──► localized versions (if requested)
+/playcraft:release-notes ─► locale-agent ─────► localized versions (if requested)
 ```
+
+- **listing-writer** — specialist copywriter enforcing all Play Store character limits
+- **aso-agent** — keyword research, density analysis, and stuffing detection
+- **policy-checker** — pre-submission compliance review against 2025–2026 Play Store policies
+- **locale-agent** — localization for 14 locales, adapts idioms not just translates
 
 ---
 
