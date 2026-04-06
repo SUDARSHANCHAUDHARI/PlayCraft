@@ -17,10 +17,11 @@ This document covers everything needed to use PlayCraft effectively. See [README
 3. [Agents](#agents)
 4. [Skills](#skills)
 5. [Hooks](#hooks)
-6. [ASO Guide](#aso-guide)
-7. [Policy Declarations Guide](#policy-declarations-guide)
-8. [Localization Guide](#localization-guide)
-9. [Plugin Architecture](#plugin-architecture)
+6. [Configuration Reference](#configuration-reference)
+7. [ASO Guide](#aso-guide)
+8. [Policy Declarations Guide](#policy-declarations-guide)
+9. [Localization Guide](#localization-guide)
+10. [Plugin Architecture](#plugin-architecture)
 
 ---
 
@@ -58,6 +59,19 @@ Shows your current PlayCraft configuration. Use this to verify your developer de
 
 To update: Claude Code → Settings → Plugins → PlayCraft → Configure.
 
+**Example output:**
+```
+PLAYCRAFT CONFIGURATION
+────────────────────────
+Developer:      John Smith
+Company:        YourCompany
+Email:          you@example.com
+GitHub:         yourhandle
+Country:        United States
+Default locale: en-US
+Other locales:  fr-FR, de-DE
+```
+
 ---
 
 ### /playcraft:store-listing
@@ -83,12 +97,27 @@ Generates a complete Google Play Store listing with all three required fields.
 TITLE: Budget Tracker — Expense Log
 SHORT DESC: Track spending and set budgets that actually stick.
 FULL DESC:
-Take control of your finances without spreadsheets or complex apps...
+Take control of your finances without spreadsheets or complex apps.
+Budget Tracker helps you log every expense and stay on target — daily,
+weekly, or monthly.
+
+WHY USERS LOVE BUDGET TRACKER:
+• Log expenses in under 3 seconds
+• Set weekly and monthly budget limits per category
+• Visual charts show exactly where your money goes
+• Export to CSV for tax season
+• Works offline — no account required
+
+PERFECT FOR:
+Anyone who wants to spend less time thinking about money and more time
+keeping it. Ideal for students, freelancers, and families.
+
+Download free and start tracking your spending today.
 
 CHARACTER COUNTS:
-Title: 34/30 ← (would be revised before showing)
-Short desc: 54/80
-Full desc: 1842/4000
+Title: 28/30
+Short desc: 55/80
+Full desc: 683/4000
 ```
 
 ---
@@ -107,12 +136,22 @@ Writes user-friendly Play Store release notes (what's new) for an app update.
 - Character count shown
 - Optional localized versions via locale-agent
 
-**Good release notes:**
+**Example output:**
 ```
+VERSION: 2.4.0
+LOCALE: en-US
+RELEASE NOTES:
 • New dark mode — follows your system setting automatically
 • Fixed crash when opening files larger than 50 MB
 • Improved startup speed by 40%
 • Added export to PDF option in settings
+
+CHARACTER COUNT: 187/500
+```
+
+**Bad example — PlayCraft will never write this:**
+```
+Bug fixes and performance improvements. Updated UI.
 ```
 
 ---
@@ -133,10 +172,28 @@ Scores your current Play Store listing and provides keyword recommendations.
 - Keyword density analysis
 - Offer to rewrite any section scoring below 7
 
-**Scoring criteria:**
-- Title: keyword presence, character limit, readability
-- Short desc: value proposition clarity, secondary keyword, character limit
-- Full desc: keyword density (3–5x primary), benefit framing, CTA, formatting, length
+**Example output:**
+```
+ASO AUDIT REPORT
+─────────────────
+Title score:       7/10 — Primary keyword present but title uses 18/30 chars, room to add secondary keyword
+Short desc score:  5/10 — Leads with feature name, not user benefit; no secondary keyword
+Full desc score:   6/10 — Primary keyword appears only 2x (aim for 3–5); no CTA at end
+Overall:           18/30
+
+TOP 3 IMPROVEMENTS:
+1. Rewrite short desc to lead with benefit: "Track expenses and hit your budget goals — effortlessly."
+2. Add primary keyword 2 more times naturally in the full description body
+3. Add a closing CTA line: "Download free and start tracking today."
+
+SUGGESTED KEYWORDS TO ADD:
+expense tracker, monthly budget, spending log, money manager, finance app
+
+KEYWORD DENSITY CHECK:
+- "budget" appears 2 times — too few (add 1–2 more)
+- "expense" appears 4 times — ok
+- "track" appears 6 times — too many (reduce to avoid stuffing)
+```
 
 ---
 
@@ -159,6 +216,29 @@ Generates a complete Play Console policy declarations checklist tailored to your
 - Developer identity verification steps for your country
 - All items include exact Play Console navigation paths
 
+**Example output:**
+```
+DECLARATIONS CHECKLIST
+─────────────────────────────────
+App: com.example.budgettracker | Finance
+
+☐ DATA SAFETY SECTION
+  Path: App Dashboard → Policy → App content → Data safety
+  - [ ] Declared data types: Financial info (user-entered budgets/expenses)
+  - [ ] Encryption in transit: declare yes
+  - [ ] Data deletion: declare whether user can request deletion
+
+☐ FINANCIAL FEATURES DECLARATION
+  Path: App Dashboard → Policy → App content → Financial features
+  - [ ] Select type: "In-app purchases" (if IAP exists)
+  - [ ] Add in-app disclaimer: "This app does not provide financial advice."
+
+NEXT STEPS:
+1. Complete each item above in Play Console
+2. Run /playcraft:aso-audit before submitting
+3. Confirm release notes are written (/playcraft:release-notes)
+```
+
 ---
 
 ### /playcraft:screenshots
@@ -176,11 +256,23 @@ Writes captions, alt text, and placement recommendations for Play Store screensh
 - Slot recommendation (1–8) with reason
 - Optional feature graphic description (1024×500 banner)
 
-**Slot strategy:**
-- Slot 1: Hero shot — most compelling feature
-- Slots 2–3: Core use case step by step
-- Slots 4–6: Secondary features
-- Slots 7–8: Social proof or onboarding moment
+**Example output:**
+```
+SCREENSHOT 1
+Caption:  Track every expense instantly
+Alt text: Home screen showing daily expense log with categories and total spent today.
+Slot:     1 — Hero shot showing core value immediately
+
+SCREENSHOT 2
+Caption:  Set budgets that stick
+Alt text: Budget settings screen with weekly and monthly limits per spending category.
+Slot:     2 — Core use case demonstrated
+
+SCREENSHOT 3
+Caption:  See where money goes
+Alt text: Charts screen showing donut chart of spending by category for the current month.
+Slot:     3 — Outcome/result of using the app
+```
 
 ---
 
@@ -194,25 +286,28 @@ Produces: primary keyword recommendation, secondary keyword list with volume/com
 
 ### listing-writer
 
-Play Store copywriter specialist. Invoked by `/playcraft:aso-audit` when user requests a rewrite.
+Play Store copywriter specialist. Invoked by `/playcraft:aso-audit` when user requests a rewrite, and by `/playcraft:store-listing` for full listing generation.
 
-Enforces all character limits strictly. Structures full descriptions with hook, benefits, use case, permissions explanation, and closing CTA.
+Enforces all character limits strictly. Structures full descriptions with hook, benefits (WHY USERS LOVE), use case (PERFECT FOR), permissions explanation, and closing CTA.
 
 ### policy-checker
 
 Pre-submission policy compliance review. Invoked by `/playcraft:store-listing` (optional) and `/playcraft:declarations`.
 
-Checks: metadata policy (keyword stuffing, competitor mentions, unverifiable claims), content policy (rating alignment, deceptive patterns), developer policy (financial disclaimers, health disclaimers).
+**Checks:**
+- Metadata policy: keyword stuffing, competitor mentions, unverifiable claims (#1, best)
+- Content policy: rating alignment, deceptive patterns, misleading feature claims
+- Developer policy: financial disclaimers, health disclaimers, VPN legitimacy
 
-Output: PASSED / WARNINGS / BLOCKERS / VERDICT.
+**Output format:** PASSED / WARNINGS (fix before submission) / BLOCKERS (will cause rejection) / VERDICT.
 
 ### locale-agent
 
 Localizes listings for 14 supported locales. Invoked by `/playcraft:store-listing` and `/playcraft:release-notes` when target locales are configured.
 
-Priority locales: en-US, th-TH, id-ID, ms-MY, zh-TW, zh-CN, ja-JP, ko-KR, de-DE, fr-FR, es-ES, pt-BR, ar.
+Supported locales: en-US, th-TH, id-ID, ms-MY, zh-TW, zh-CN, ja-JP, ko-KR, de-DE, fr-FR, es-ES, pt-BR, ar.
 
-Adapts idioms and cultural references — not word-for-word translation. Re-checks character limits after translation. Flags RTL considerations for Arabic.
+Adapts idioms and cultural references — not word-for-word translation. Re-checks character limits after translation (CJK scripts are denser; Arabic can be longer). Flags RTL layout considerations for Arabic.
 
 ---
 
@@ -224,31 +319,31 @@ Skills are loaded automatically when relevant — you do not invoke them directl
 
 2025–2026 Play Store rules: character limits, metadata policy, new requirements (AI declarations, financial declarations, closed testing, identity verification), data safety, rating system, payments policy.
 
-Trigger: any Play Store submission or listing work.
+**Trigger:** any Play Store submission or listing work.
 
 ### closed-testing
 
-Requirements for new developer accounts: 12+ testers, 14 continuous days, step-by-step Play Console setup, finding testers, common mistakes.
+Requirements for new developer accounts (post November 2023): 12+ testers, 14 continuous days, step-by-step Play Console setup, how to find testers, common mistakes.
 
-Trigger: setting up a new app or preparing for open testing.
+**Trigger:** setting up a new app or preparing for open testing.
 
 ### financial-declarations
 
 Financial features declaration walkthrough with Play Console navigation paths, IAP/subscription declaration requirements, common mistakes.
 
-Trigger: app involving payments, financial data, banking, crypto, or subscriptions.
+**Trigger:** app involving payments, financial data, banking, crypto, or subscriptions.
 
 ### ai-content-declarations
 
-AI-generated content declaration guide (2025 requirement), Play Console navigation, moderation requirements, user disclosure requirements, Claude API / Gemini API specific guidance.
+AI-generated content declaration guide (2025 requirement), Play Console navigation, moderation requirements, user disclosure requirements, Claude API and Gemini API specific guidance.
 
-Trigger: app using AI to generate text, images, audio, or video.
+**Trigger:** app using AI to generate text, images, audio, or video.
 
 ### developer-identity-th
 
-Developer identity verification for Thailand: individual account documents, organization/D-U-N-S requirements, Thai bank account setup, W-8BEN tax form, VAT registration, common issues.
+Developer identity verification for Thailand: individual account documents (Thai national ID), organization/D-U-N-S requirements, Thai bank account setup, W-8BEN tax form, VAT registration, common issues.
 
-Trigger: Play Console account setup or identity verification.
+**Trigger:** Play Console account setup or identity verification for Thailand-based developers.
 
 ---
 
@@ -256,14 +351,34 @@ Trigger: Play Console account setup or identity verification.
 
 ### pre-release-check
 
-Fires before `Bash` or `Write` tool use when the command appears to be a release action (building release AAB/APK, signing, uploading).
+Fires before `Bash` or `Write` tool use when the command appears to be a release action (building release AAB/APK, running signing commands, uploading to Play Console).
 
-Prints a non-blocking pre-flight checklist:
-- Run `/playcraft:declarations`
-- Run `/playcraft:aso-audit`
-- Confirm release notes written
-- Confirm version code incremented
-- Confirm closed testing complete (if required)
+Prints a non-blocking pre-flight checklist reminder:
+- Run `/playcraft:declarations` — all declarations up to date?
+- Run `/playcraft:aso-audit` — store listing reviewed?
+- Confirm release notes written (`/playcraft:release-notes`)
+- Version code incremented in `build.gradle`?
+- Closed testing complete (if required for account type)?
+
+Does not block the action — surfaces the reminder before proceeding.
+
+---
+
+## Configuration Reference
+
+Configuration is stored globally via Claude Code's plugin `userConfig` system. Values are substituted automatically into every command and agent prompt using `${user_config.KEY}` tokens.
+
+| Key | Title | Description | Used in |
+|---|---|---|---|
+| `developer_name` | Developer Name | Your full name or display name | `/playcraft:setup` display |
+| `company` | Company | Developer label shown on Play Store | `/playcraft:store-listing`, `/playcraft:screenshots` |
+| `email` | Contact Email | Email for Play Console and privacy policy | `/playcraft:declarations` |
+| `github_username` | GitHub Username | Your GitHub handle | `/playcraft:setup` display |
+| `country` | Country | Country of operation — used for identity verification guidance | `/playcraft:declarations` |
+| `default_locale` | Default Locale | Primary locale for store listings | `/playcraft:store-listing`, `/playcraft:release-notes`, `/playcraft:aso-audit` |
+| `target_locales` | Target Locales | Comma-separated additional locales | `/playcraft:store-listing`, `/playcraft:release-notes` |
+
+All fields are plain strings. None are sensitive.
 
 ---
 
@@ -273,21 +388,32 @@ Prints a non-blocking pre-flight checklist:
 
 | Field | Limit | Goal |
 |---|---|---|
-| Title | 30 chars | Primary keyword + brand name |
-| Short desc | 80 chars | Secondary keyword + core benefit |
+| Title | 30 chars | Primary keyword + brand name — highest ranking weight |
+| Short desc | 80 chars | Secondary keyword + core benefit — shown in search results |
 | Full desc | 4000 chars | 3–5x primary keyword, benefits over features |
 
 ### Keyword placement
 
-- **Title** — highest ranking weight. One primary keyword only.
+- **Title** — highest ranking weight. One primary keyword only. Never keyword-stuff.
 - **Short description** — indexed by Google, shown in search results. One secondary keyword.
-- **Full description** — primary keyword 3–5 times naturally. Secondary keywords woven in.
+- **Full description** — primary keyword 3–5 times naturally. Secondary keywords woven in throughout.
 
-### Keyword density
+### Keyword density rules
 
-- Primary keyword: 3–5 occurrences in full description = optimal
-- Below 3: too few — Google may not associate your app with this term
-- Above 5: keyword stuffing risk — policy violation
+| Occurrences | Status |
+|---|---|
+| 0–2 | Too few — Google may not associate your app with this term |
+| 3–5 | Optimal |
+| 6+ | Keyword stuffing — policy violation risk |
+
+### Writing principles PlayCraft enforces
+
+- Lead with user benefit, not feature name
+- Active voice: "Track expenses" not "Expenses are tracked"
+- No weak adjectives: "easy", "simple", "best", "amazing", "powerful"
+- No unverifiable claims: "#1 app", "world's best", "most downloaded"
+- No competitor names
+- No ALL CAPS except acronyms and section headers
 
 ---
 
@@ -295,18 +421,21 @@ Prints a non-blocking pre-flight checklist:
 
 ### Required for every app
 
-- Data Safety section — must be complete before any update can be published
-- Content rating — via IARC questionnaire
+| Declaration | Navigation | Notes |
+|---|---|---|
+| Data Safety | App Dashboard → Policy → App content → Data safety | Must be complete before any update can be published |
+| Content rating | App Dashboard → Policy → App content → App content | Via IARC questionnaire — answer honestly |
 
 ### Conditionally required
 
-| Condition | Declaration required |
-|---|---|
-| App mentions money, banking, crypto, investments | Financial features declaration |
-| App uses AI to generate content | AI-generated content declaration |
-| App targets children under 13 | Families policy compliance |
-| App requests background location | Prominent in-app disclosure |
-| New developer account (post Nov 2023) | Closed testing (12 testers, 14 days) |
+| Condition | Declaration required | Navigation |
+|---|---|---|
+| App mentions money, banking, crypto, investments | Financial features declaration | App content → Financial features |
+| App uses AI to generate text, images, audio, or video | AI-generated content declaration | App content → AI-generated content |
+| App targets children under 13 | Families policy | App content → Target audience and content |
+| App requests background location | Prominent in-app disclosure | Must be in app UI, not just policy |
+| New developer account (post Nov 2023) | Closed testing: 12 testers, 14 days | Testing → Closed testing |
+| All new and some existing accounts | Identity verification | Settings → Developer account → Identity verification |
 
 ---
 
@@ -316,50 +445,67 @@ Prints a non-blocking pre-flight checklist:
 
 | Locale | Language | Notes |
 |---|---|---|
-| en-US | English (US) | Default / source |
-| th-TH | Thai | Priority for Southeast Asia |
-| id-ID | Indonesian | 270M population, growing market |
+| en-US | English (US) | Default / source language |
+| th-TH | Thai | Priority — Southeast Asia |
+| id-ID | Indonesian | 270M population, fast-growing Play Store market |
 | ms-MY | Malay | Malaysia + Brunei |
 | zh-TW | Traditional Chinese | Taiwan, Hong Kong |
 | zh-CN | Simplified Chinese | Mainland China |
-| ja-JP | Japanese | Search in hiragana/katakana for foreign apps |
+| ja-JP | Japanese | Foreign app names often searched in katakana |
 | ko-KR | Korean | |
 | de-DE | German | EU tier 1 |
 | fr-FR | French | EU tier 1 |
-| es-ES | Spanish | EU + LatAm via es-419 |
+| es-ES | Spanish | EU + LatAm (use es-419 for LatAm variant) |
 | pt-BR | Brazilian Portuguese | Largest LatAm market |
-| ar | Arabic | RTL — flag for layout mirroring |
+| ar | Arabic | RTL — app screenshots may need mirroring |
+
+### How localization works
+
+locale-agent does not do word-for-word translation. For each locale it:
+1. Translates accurately while adapting idioms for the target market
+2. Re-checks all character limits after translation
+3. Flags any content that may be culturally inappropriate
+4. Notes market-specific search behavior (e.g. Japanese users often search in hiragana/katakana for foreign apps)
 
 ---
 
 ## Plugin Architecture
 
 ```
-User prompt
-    │
-    ▼
-Command (.md)
-    │
-    ├── Reads ${user_config.*} from plugin userConfig (global)
-    ├── Asks user for app-specific inputs
-    │
-    ▼
-Agent(s) invoked as needed
-    │
-    ├── aso-agent ──── keyword research
-    ├── listing-writer ─ copywriting
-    ├── policy-checker ─ compliance review
-    └── locale-agent ── localization
-    │
-    ▼
-Skills loaded automatically by trigger
-    │
-    ├── play-policy-2026 ── character limits + rules
-    ├── financial-declarations ── if financial app
-    ├── ai-content-declarations ── if AI features
-    ├── closed-testing ── if new account setup
-    └── developer-identity-th ── if Thailand account
-    │
-    ▼
-Output to user (formatted text in Claude Code session)
+PlayCraft/
+├── .claude-plugin/
+│   ├── plugin.json              # Plugin manifest + userConfig schema
+│   └── marketplace.json         # Marketplace listing metadata
+├── commands/
+│   ├── setup.md                 # /playcraft:setup
+│   ├── store-listing.md         # /playcraft:store-listing
+│   ├── release-notes.md         # /playcraft:release-notes
+│   ├── aso-audit.md             # /playcraft:aso-audit
+│   ├── declarations.md          # /playcraft:declarations
+│   └── screenshots.md           # /playcraft:screenshots
+├── agents/
+│   ├── aso-agent.md             # Keyword research and density analysis
+│   ├── listing-writer.md        # Play Store copywriter
+│   ├── policy-checker.md        # Policy compliance review
+│   └── locale-agent.md          # Localization for 14 locales
+├── skills/
+│   ├── play-policy-2026/        # 2025–2026 Play Store rules
+│   ├── closed-testing/          # Closed testing requirements
+│   ├── financial-declarations/  # Financial features declaration guide
+│   ├── ai-content-declarations/ # AI content declaration guide
+│   └── developer-identity-th/  # Thailand identity verification guide
+├── hooks/
+│   └── pre-release-check.md     # Pre-release checklist reminder
+├── README.md                    # Quick overview
+├── DOCUMENTATION.md             # This file — full reference
+├── CHANGELOG.md                 # Version history
+└── LICENSE                      # MIT
 ```
+
+### How commands, agents, and skills interact
+
+- **Commands** (`commands/*.md`) — define the user-facing workflow step by step. They read developer config from `${user_config.*}`, ask the user for app-specific inputs, and orchestrate which agents to spawn.
+- **Agents** (`agents/*.md`) — specialized workers that handle a specific task (keyword research, copywriting, policy checking, localization). Spawned by commands via Claude's multi-agent system.
+- **Skills** (`skills/*/SKILL.md`) — reference knowledge loaded automatically when their trigger condition matches. They provide rules, data tables, and compliance guides (e.g. the full Play Store policy rules, Thailand identity verification steps) without requiring agents to carry that knowledge themselves.
+
+This separation means each agent stays focused, the workflow logic (commands) is clean, and the knowledge base (skills) can be updated independently.
