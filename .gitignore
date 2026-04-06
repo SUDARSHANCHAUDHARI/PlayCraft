@@ -1,0 +1,26 @@
+# Plugin user config — contains personal developer details, never commit
+.claude-plugin-config.json
+
+# Internal planning/spec docs — not part of the public plugin
+PLUGIN_1_GOOGLE_PLAY_PUBLISHER.md
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Node (if tooling is ever added)
+node_modules/
+npm-debug.log*
+
+# Logs
+*.log

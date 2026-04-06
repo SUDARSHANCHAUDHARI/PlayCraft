@@ -1,0 +1,74 @@
+{
+  "name": "playcraft",
+  "description": "Automate every Google Play Store publishing task — store listings, ASO, release notes, policy declarations, and screenshot copy. Built by an Android developer who has shipped 20+ apps.",
+  "version": "1.0.0",
+  "author": {
+    "name": "SUDARSHANCHAUDHARI",
+    "url": "https://github.com/SUDARSHANCHAUDHARI"
+  },
+  "homepage": "https://github.com/SUDARSHANCHAUDHARI/PlayCraft",
+  "repository": "https://github.com/SUDARSHANCHAUDHARI/PlayCraft",
+  "license": "MIT",
+  "keywords": ["android", "google-play", "play-store", "aso", "publishing", "mobile"],
+  "userConfig": {
+    "developer_name": {
+      "title": "Developer Name",
+      "type": "string",
+      "description": "Your full name or developer display name (e.g. Your Name)",
+      "sensitive": false
+    },
+    "company": {
+      "title": "Company",
+      "type": "string",
+      "description": "Company / developer label shown on Play Store (e.g. YourCompany)",
+      "sensitive": false
+    },
+    "email": {
+      "title": "Contact Email",
+      "type": "string",
+      "description": "Contact email for Play Console and privacy policy (e.g. you@example.com)",
+      "sensitive": false
+    },
+    "github_username": {
+      "title": "GitHub Username",
+      "type": "string",
+      "description": "Your GitHub username (e.g. your-github-username)",
+      "sensitive": false
+    },
+    "country": {
+      "title": "Country",
+      "type": "string",
+      "description": "Country where you are based (e.g. United States)",
+      "sensitive": false
+    },
+    "default_locale": {
+      "title": "Default Locale",
+      "type": "string",
+      "description": "Default locale for store listings (e.g. en-US)",
+      "sensitive": false
+    },
+    "target_locales": {
+      "title": "Target Locales",
+      "type": "string",
+      "description": "Comma-separated additional locales to support (e.g. fr-FR, de-DE — leave blank to skip)",
+      "sensitive": false
+    }
+  },
+  "commands": [
+    { "name": "setup",         "file": "commands/setup.md" },
+    { "name": "store-listing", "file": "commands/store-listing.md" },
+    { "name": "release-notes", "file": "commands/release-notes.md" },
+    { "name": "aso-audit",     "file": "commands/aso-audit.md" },
+    { "name": "declarations",  "file": "commands/declarations.md" },
+    { "name": "screenshots",   "file": "commands/screenshots.md" }
+  ],
+  "agents": [
+    { "name": "aso-agent",      "file": "agents/aso-agent.md" },
+    { "name": "listing-writer", "file": "agents/listing-writer.md" },
+    { "name": "policy-checker", "file": "agents/policy-checker.md" },
+    { "name": "locale-agent",   "file": "agents/locale-agent.md" }
+  ],
+  "hooks": [
+    { "event": "PreToolUse", "file": "hooks/pre-release-check.md" }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "playcraft",
+  "metadata": {
+    "description": "Automate Play Store submissions — listings, ASO, release notes, policy declarations, and screenshot copy for Android developers."
+  },
+  "owner": {
+    "name": "SUDARSHANCHAUDHARI",
+    "email": "sudarshantechlabs@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "playcraft",
+      "description": "Automate every Google Play Store publishing task — store listings, ASO, release notes, policy declarations, and screenshot copy. Built by an Android developer who has shipped 20+ apps.",
+      "version": "1.0.0",
+      "source": "./",
+      "category": "mobile-development",
+      "author": {
+        "name": "SUDARSHANCHAUDHARI",
+        "email": "sudarshantechlabs@gmail.com"
+      },
+      "homepage": "https://github.com/SUDARSHANCHAUDHARI/PlayCraft",
+      "repository": "https://github.com/SUDARSHANCHAUDHARI/PlayCraft",
+      "license": "MIT",
+      "keywords": ["android", "google-play", "play-store", "aso", "publishing", "mobile"],
+      "privacy_policy": "https://sudarshanchaudhari.github.io/playcraft-claude-plugin-privacy-policy/"
+    }
+  ]
+}
