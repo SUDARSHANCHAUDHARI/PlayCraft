@@ -21,6 +21,12 @@
 
 ## Install
 
+**Step 1 — Add the marketplace**
+```bash
+/plugin marketplace add SUDARSHANCHAUDHARI/PlayCraft
+```
+
+**Step 2 — Install the plugin**
 ```bash
 /plugin install playcraft
 ```
