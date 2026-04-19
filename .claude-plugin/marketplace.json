@@ -4,8 +4,7 @@
     "description": "Automate Play Store submissions — listings, ASO, release notes, policy declarations, and screenshot copy for Android developers."
   },
   "owner": {
-    "name": "SUDARSHANCHAUDHARI",
-    "email": "sudarshantechlabs@gmail.com"
+    "name": "SUDARSHANCHAUDHARI"
   },
   "plugins": [
     {
@@ -15,8 +14,7 @@
       "source": "./",
       "category": "mobile-development",
       "author": {
-        "name": "SUDARSHANCHAUDHARI",
-        "email": "sudarshantechlabs@gmail.com"
+        "name": "SUDARSHANCHAUDHARI"
       },
       "homepage": "https://github.com/SUDARSHANCHAUDHARI/PlayCraft",
       "repository": "https://github.com/SUDARSHANCHAUDHARI/PlayCraft",

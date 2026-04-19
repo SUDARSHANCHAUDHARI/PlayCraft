@@ -135,7 +135,7 @@ PlayCraft/
 ## Author
 
 **SUDARSHANCHAUDHARI** — [github.com/SUDARSHANCHAUDHARI](https://github.com/SUDARSHANCHAUDHARI)
-SudarshanTechLabs | sudarshantechlabs@gmail.com
+SudarshanTechLabs
 
 ---
 
