@@ -17,6 +17,13 @@
 4. Generates all required Play Console policy declarations — data safety, financial, AI content, families
 5. Writes screenshot captions, alt text, and slot recommendations for up to 8 screenshots
 
+## Why This Exists
+
+Play Store compliance had no repeatable structure. Each submission was manually reconstructed — listing copy format, release notes character limits, Data Safety section declarations. At fleet scale across 22+ apps, this was producing compliance gaps and inconsistent listing quality.
+
+PlayCraft encodes the full Play Store submission workflow into structured commands. Every listing goes through the same format, the same character limit enforcement, the same ASO scoring pass. The compliance declarations checklist runs before every release. No manual reconstruction, no missed fields.
+
+
 ---
 
 ## Install
