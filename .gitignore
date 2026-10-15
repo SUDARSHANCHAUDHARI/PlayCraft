@@ -35,3 +35,5 @@ graphify-out/
 !.env.example
 *.key
 secrets.json
+
+repoguard-results/
