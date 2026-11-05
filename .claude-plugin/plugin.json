@@ -53,22 +53,5 @@
       "description": "Comma-separated additional locales to support (e.g. fr-FR, de-DE — leave blank to skip)",
       "sensitive": false
     }
-  },
-  "commands": [
-    { "name": "setup",         "file": "commands/setup.md" },
-    { "name": "store-listing", "file": "commands/store-listing.md" },
-    { "name": "release-notes", "file": "commands/release-notes.md" },
-    { "name": "aso-audit",     "file": "commands/aso-audit.md" },
-    { "name": "declarations",  "file": "commands/declarations.md" },
-    { "name": "screenshots",   "file": "commands/screenshots.md" }
-  ],
-  "agents": [
-    { "name": "aso-agent",      "file": "agents/aso-agent.md" },
-    { "name": "listing-writer", "file": "agents/listing-writer.md" },
-    { "name": "policy-checker", "file": "agents/policy-checker.md" },
-    { "name": "locale-agent",   "file": "agents/locale-agent.md" }
-  ],
-  "hooks": [
-    { "event": "PreToolUse", "file": "hooks/pre-release-check.md" }
-  ]
+  }
 }

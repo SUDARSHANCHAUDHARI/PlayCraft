@@ -1,0 +1,17 @@
+{
+  "description": "One-line reminder to run /playcraft:release-notes and /playcraft:aso-audit before a release build or signing command. Never blocks.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/pre-release-check.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

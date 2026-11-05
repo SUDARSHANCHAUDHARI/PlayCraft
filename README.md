@@ -120,7 +120,8 @@ PlayCraft/
 ├── skills/                      # play-policy-2026, closed-testing, financial-declarations,
 │                                #   ai-content-declarations, developer-identity-th
 ├── hooks/
-│   └── pre-release-check.md     # Pre-release checklist reminder
+│   ├── hooks.json               # Hook registration
+│   └── pre-release-check.sh     # One-line release-notes / ASO reminder before release builds
 ├── README.md
 ├── CHANGELOG.md
 ├── DOCUMENTATION.md

@@ -351,16 +351,15 @@ Developer identity verification for Thailand: individual account documents (Thai
 
 ### pre-release-check
 
-Fires before `Bash` or `Write` tool use when the command appears to be a release action (building release AAB/APK, running signing commands, uploading to Play Console).
+Script: `hooks/pre-release-check.sh`, registered in `hooks/hooks.json`. Fires before any Bash call containing `bundleRelease`, `assembleRelease` or `apksigner`.
 
-Prints a non-blocking pre-flight checklist reminder:
-- Run `/playcraft:declarations` — all declarations up to date?
-- Run `/playcraft:aso-audit` — store listing reviewed?
-- Confirm release notes written (`/playcraft:release-notes`)
-- Version code incremented in `build.gradle`?
-- Closed testing complete (if required for account type)?
+Prints one line:
 
-Does not block the action — surfaces the reminder before proceeding.
+```
+PlayCraft: before uploading, run /playcraft:release-notes and /playcraft:aso-audit.
+```
+
+Listing and policy reminders only. Build checks (versionCode, keystore, signing) belong to the DroidForge plugin's pre-release hook. Always exits 0 — never blocks the command.
 
 ---
 
@@ -495,7 +494,8 @@ PlayCraft/
 │   ├── ai-content-declarations/ # AI content declaration guide
 │   └── developer-identity-th/  # Thailand identity verification guide
 ├── hooks/
-│   └── pre-release-check.md     # Pre-release checklist reminder
+│   ├── hooks.json               # Hook registration (auto-loaded by Claude Code)
+│   └── pre-release-check.sh     # One-line reminder before release builds
 ├── README.md                    # Quick overview
 ├── DOCUMENTATION.md             # This file — full reference
 ├── CHANGELOG.md                 # Version history
