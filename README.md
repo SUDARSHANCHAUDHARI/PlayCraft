@@ -94,7 +94,9 @@ Paste your git log or describe your changes. Get polished, user-friendly release
 
 ```
 /playcraft:store-listing ──► listing-writer ──► title / short desc / full desc
-                          └──► policy-checker ──► compliance review
+                          ├──► listing-verifier ─► exact counts + fixed rules (script) + judgment
+                          ├──► policy-checker ──► compliance review
+                          └──► locale-agent × N (parallel) ──► listing-verifier on every locale
 
 /playcraft:aso-audit ─────► aso-agent ────────► keyword report + scored listing
 
@@ -107,6 +109,8 @@ Paste your git log or describe your changes. Get polished, user-friendly release
 - **aso-agent** — keyword research, density analysis, and stuffing detection
 - **policy-checker** — pre-submission compliance review against 2025–2026 Play Store policies
 - **locale-agent** — localization for 14 locales, adapts idioms not just translates
+- **listing-verifier** — runs `scripts/check_listing.py` for exact character counts (code points) and
+  fixed rules (banned words, superlatives, CTA phrases, emoji in title, ALL CAPS), then judgment checks
 
 ## Plugin Structure
 
@@ -116,9 +120,11 @@ PlayCraft/
 │   ├── plugin.json              # Plugin manifest + userConfig
 │   └── marketplace.json         # Marketplace manifest
 ├── commands/                    # /playcraft:setup|store-listing|release-notes|aso-audit|declarations|screenshots
-├── agents/                      # aso-agent, listing-writer, policy-checker, locale-agent
+├── agents/                      # aso-agent, listing-writer, policy-checker, locale-agent, listing-verifier
 ├── skills/                      # play-policy-2026, closed-testing, financial-declarations,
 │                                #   ai-content-declarations, developer-identity-th
+├── scripts/check_listing.py     # Deterministic listing checks (stdlib Python)
+├── tests/                       # python3 -I -m unittest discover -s tests
 ├── hooks/
 │   ├── hooks.json               # Hook registration
 │   └── pre-release-check.sh     # One-line release-notes / ASO reminder before release builds

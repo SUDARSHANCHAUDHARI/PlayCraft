@@ -46,7 +46,9 @@ Use these values from plugin config throughout — never ask the user for them:
    - Closing CTA line (soft — no imperative ALL CAPS)
    - Count characters and confirm ≤ 4000 before outputting
 
-3. Check all character limits before outputting. If any field exceeds its limit, revise it before showing the user.
+3. Spawn the listing-verifier agent on the listing. It counts characters with a script, so trust its
+   counts over your own. If any check fails, revise the listing and verify again before showing the
+   user.
 
 4. Output in this exact format:
 
@@ -65,6 +67,16 @@ Full desc: X/4000
 5. After outputting, ask: "Would you like me to run a policy check on this listing? (y/n)"
    - If yes: invoke the policy-checker agent on the generated listing.
 
+6. Localized versions, once the user approves the English listing and ${user_config.target_locales}
+   is set (or the user names locales):
+   - Spawn one locale-agent per locale in parallel: a single message that contains one Agent call
+     per locale, not one message per locale. Give each one the approved listing and its single
+     locale.
+   - Spawn the listing-verifier agent once on all returned blocks.
+   - For a locale that fails, send the failures back to a new locale-agent for that locale only,
+     then verify that locale again. Stop after two retries and report what is still failing.
+   - Output every locale block, then one summary line per locale: ready, or what still fails.
+
 ## Rules
 - No keyword stuffing — Google penalizes repetitive keyword use
 - Do not mention competitor app names
@@ -73,4 +85,4 @@ Full desc: X/4000
 - Write in active voice
 - Never use: "easy", "simple", "best", "amazing", "powerful" — show the value, don't label it
 - Default to ${user_config.default_locale} for the listing language
-- If ${user_config.target_locales} is set, offer to generate localized versions using locale-agent after the English listing is approved
+- If ${user_config.target_locales} is set, offer to generate localized versions (step 6) after the English listing is approved

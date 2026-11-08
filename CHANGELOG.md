@@ -6,6 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [Unreleased]
+
+### Added
+- `listing-verifier` agent — checks any listing block (any locale) with `scripts/check_listing.py`
+  for exact character counts and fixed rules, then the checks that need judgment
+- `scripts/check_listing.py` and `tests/` — stdlib Python, 11 unit tests
+- Per-locale fan-out in `/playcraft:store-listing` step 6: one locale-agent per locale in parallel,
+  listing-verifier on every block, up to two retries for a failing locale
+
+### Changed
+- `/playcraft:store-listing` verifies the listing with listing-verifier instead of counting
+  characters itself
+
 ## [1.0.0] — 2026-04-06
 
 ### Added
